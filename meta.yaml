@@ -1,0 +1,4 @@
+﻿name: plugin-demo
+description: Demo plugin showing recommended extension structure, built-in tool calls, config/env defaults, and optional HTTP API probe.
+author: vmoranv
+source_repo: local-demo
