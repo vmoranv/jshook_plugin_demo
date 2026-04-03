@@ -2,12 +2,20 @@ import {
   createExtension,
   jsonResponse,
   errorResponse,
-  getPluginBooleanConfig,
-  loadPluginEnv,
 } from '@jshookmcp/extension-sdk/plugin';
 import type { ToolArgs, PluginLifecycleContext } from '@jshookmcp/extension-sdk/plugin';
 
-loadPluginEnv(import.meta.url);
+const PLUGIN_SLUG = 'demo-plugin';
+
+function getPluginBooleanConfig(
+  ctx: PluginLifecycleContext,
+  slug: string,
+  key: string,
+  fallback: boolean,
+): boolean {
+  const value = ctx.getConfig(`plugins.${slug}.${key}`, fallback);
+  return typeof value === 'boolean' ? value : fallback;
+}
 
 function assertLoopbackUrl(value: string): URL {
   const url = new URL(value);
@@ -105,7 +113,7 @@ export default createExtension('io.github.vmoranv.demo-plugin', '0.1.0')
   )
   .onLoad((ctx) => { ctx.setRuntimeData('loadedAt', new Date().toISOString()); })
   .onValidate((ctx: PluginLifecycleContext) => {
-    const enabled = getPluginBooleanConfig(ctx, 'demo-plugin', 'enabled', true);
+    const enabled = getPluginBooleanConfig(ctx, PLUGIN_SLUG, 'enabled', true);
     if (!enabled) return { valid: false, errors: ['Plugin disabled by config'] };
     return { valid: true, errors: [] };
   });
