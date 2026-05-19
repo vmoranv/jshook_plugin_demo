@@ -1,4 +1,4 @@
 name: Demo Plugin
 description: A reference plugin showing env defaults, built-in tool invocation, and optional HTTP probing.
 author: vmoranv
-source_repo: local-demo
+source_repo: https://github.com/vmoranv/jshook_plugin_demo
